@@ -1,5 +1,4 @@
-import {DiceGame} from '@betswirl/ui'  // Added: Import casino game component
-import './App.css'
+import {DiceGame} from '@betswirl/ui-react'  // Added: Import casino game component
 
 function App() {
     return (

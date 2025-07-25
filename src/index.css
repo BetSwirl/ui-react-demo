@@ -23,11 +23,23 @@ a:hover {
 }
 
 body {
+  width: 100%;
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 328px;
   min-height: 100vh;
+  background-image: url('/page-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+}
+
+#root {
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
 }
 
 h1 {
