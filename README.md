@@ -1,5 +1,5 @@
 # BetSwirl React Demo
 
-This project is the result of following the integration guide: https://github.com/chainhackers/sdk/blob/main/examples/mini-app/docs/react-guide.md
+This project is the result of following the integration guide: https://github.com/BetSwirl/sdk/blob/main/packages/ui-react/docs/react-guide.md
 
 Live demo: 
