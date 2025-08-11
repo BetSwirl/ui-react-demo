@@ -4,17 +4,24 @@ import { OnchainKitProvider, type AppConfig } from '@coinbase/onchainkit'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { http, type Hex } from 'viem'
 import { WagmiProvider, createConfig } from 'wagmi'
-import { base } from 'wagmi/chains'
-import { BetSwirlSDKProvider, type TokenWithImage } from '@betswirl/ui-react'
+import { base, polygon, arbitrum } from 'wagmi/chains'
+import { BalanceProvider, BetSwirlSDKProvider, TokenProvider, type TokenWithImage } from '@betswirl/ui-react'
 import './index.css'
-import App from './App.tsx'
 import '@betswirl/ui-react/styles.css'
+import App from './App.tsx'
 
 const queryClient = new QueryClient()
+// Use custom RPC if provided in .env, otherwise use default
+const baseRpc = import.meta.env.VITE_BASE_RPC_URL
+const polygonRpc = import.meta.env.VITE_POLYGON_RPC_URL  
+const arbitrumRpc = import.meta.env.VITE_ARBITRUM_RPC_URL
+
 const config = createConfig({
-  chains: [base],
+  chains: [base, polygon, arbitrum],
   transports: {
-    [base.id]: http(),
+    [base.id]: baseRpc ? http(baseRpc) : http(),
+    [polygon.id]: polygonRpc ? http(polygonRpc) : http(),
+    [arbitrum.id]: arbitrumRpc ? http(arbitrumRpc) : http(),
   },
 })
 
@@ -29,7 +36,7 @@ const DEGEN_TOKEN: TokenWithImage = {
   address: "0x4ed4E862860beD51a9570b96d89aF5E1B0Efefed" as Hex,
   symbol: "DEGEN",
   decimals: 18,
-  image: "https://www.betswirl.com/img/tokens/DEGEN.svg",
+  image: "https://www.betswirl.com/img/tokens/DEGEN.svg"
 }
 
 const ETH_TOKEN: TokenWithImage = {
@@ -53,10 +60,15 @@ createRoot(document.getElementById('root')!).render(
         <OnchainKitProvider chain={base} config={onChainKitConfig}>
           <BetSwirlSDKProvider
             initialChainId={base.id}
+            supportedChains={[base.id, polygon.id, arbitrum.id]}
             bankrollToken={DEGEN_TOKEN}     // Optional: set default betting token
             filteredTokens={ALLOWED_TOKENS} // Optional: limit available tokens
           >
-            <App />
+            <TokenProvider>
+              <BalanceProvider>
+                <App />
+              </BalanceProvider>
+            </TokenProvider>
           </BetSwirlSDKProvider>
         </OnchainKitProvider>
       </QueryClientProvider>
