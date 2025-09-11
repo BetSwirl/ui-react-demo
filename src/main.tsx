@@ -5,7 +5,14 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { http, type Hex } from 'viem'
 import { WagmiProvider, createConfig } from 'wagmi'
 import { base, polygon, arbitrum } from 'wagmi/chains'
-import { BalanceProvider, BetSwirlSDKProvider, TokenProvider, type TokenWithImage } from '@betswirl/ui-react'
+import { 
+  BalanceProvider, 
+  BetSwirlSDKProvider, 
+  FreebetsProvider, 
+  LeaderboardProvider, 
+  TokenProvider, 
+  type TokenWithImage 
+} from '@betswirl/ui-react'
 import './index.css'
 import '@betswirl/ui-react/styles.css'
 import App from './App.tsx'
@@ -51,6 +58,7 @@ const ALLOWED_TOKENS = [
   DEGEN_TOKEN.address,
   ETH_TOKEN.address,
   "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913" as Hex, // USDC
+  "0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5" as Hex, // BETS
 ]
 
 createRoot(document.getElementById('root')!).render(
@@ -66,7 +74,11 @@ createRoot(document.getElementById('root')!).render(
           >
             <TokenProvider>
               <BalanceProvider>
-                <App />
+                <FreebetsProvider>
+                  <LeaderboardProvider>
+                    <App />
+                  </LeaderboardProvider>
+                </FreebetsProvider>
               </BalanceProvider>
             </TokenProvider>
           </BetSwirlSDKProvider>
