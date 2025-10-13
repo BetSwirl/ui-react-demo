@@ -72,7 +72,7 @@ createRoot(document.getElementById('root')!).render(
                     <BetSwirlSDKProvider
                         initialChainId={base.id}
                         supportedChains={[base.id, polygon.id, arbitrum.id]}
-                        affiliate={affiliateAddress}  // Add this line
+                        affiliate={affiliateAddress}
                         bankrollToken={DEGEN_TOKEN}     // Optional: set default betting token
                         filteredTokens={ALLOWED_TOKENS} // Optional: limit available tokens
                     >
