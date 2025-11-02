@@ -24,7 +24,7 @@ const queryClient = new QueryClient()
 const baseRpc = import.meta.env.VITE_BASE_RPC_URL
 const polygonRpc = import.meta.env.VITE_POLYGON_RPC_URL
 const arbitrumRpc = import.meta.env.VITE_ARBITRUM_RPC_URL
-const affiliateAddress = import.meta.env.VITE_AFFILIATE_ADDRESS
+const affiliateAddress = import.meta.env.VITE_AFFILIATE_ADDRESS as `0x${string}` | undefined
 
 const config = createConfig({
     chains: [base, polygon, arbitrum],
