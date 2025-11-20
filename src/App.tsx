@@ -1,9 +1,8 @@
 import { useState } from 'react'
 import { CoinTossGame, DiceGame, RouletteGame } from '@betswirl/ui-react'
-
+import { CASINO_GAME_TYPE, labelCasinoGameByType } from '@betswirl/sdk-core'
 function App() {
-    const [game, setGame] = useState<'dice' | 'cointoss' | 'roulette'>('dice')
-
+    const [game, setGame] = useState<CASINO_GAME_TYPE>(CASINO_GAME_TYPE.DICE)
     const gameProps = {
         theme: "dark" as const,
         customTheme: {
@@ -22,7 +21,7 @@ function App() {
                 padding: '12px 0',
                 marginBottom: '12px',
             }}>
-                {(['dice', 'cointoss', 'roulette'] as const).map((g) => (
+                {([CASINO_GAME_TYPE.DICE, CASINO_GAME_TYPE.COINTOSS, CASINO_GAME_TYPE.ROULETTE] as const).map((g) => (
                     <button
                         key={g}
                         onClick={() => setGame(g)}
@@ -38,14 +37,14 @@ function App() {
                             outline: 'none',
                         }}
                     >
-                        {g === 'cointoss' ? 'Coin Toss' : g.charAt(0).toUpperCase() + g.slice(1)}
+                        {labelCasinoGameByType[g]}
                     </button>
                 ))}
             </nav>
 
-            {game === 'dice' && <DiceGame {...gameProps} />}
-            {game === 'cointoss' && <CoinTossGame {...gameProps} />}
-            {game === 'roulette' && <RouletteGame {...gameProps} />}
+            {game === CASINO_GAME_TYPE.DICE && <DiceGame  {...gameProps}/>}
+            {game === CASINO_GAME_TYPE.COINTOSS && <CoinTossGame {...gameProps} />}
+            {game === CASINO_GAME_TYPE.ROULETTE && <RouletteGame {...gameProps} />}
         </div>
     )
 }
