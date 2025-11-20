@@ -10,16 +10,18 @@ import {
   BetSwirlSDKProvider, 
   FreebetsProvider, 
   LeaderboardProvider, 
-  TokenProvider, 
+  TokenProvider,
+  type PlayNowEvent, 
 } from '@betswirl/ui-react'
 import './index.css'
 import '@betswirl/ui-react/styles.css'
 import App from './App.tsx'
 
 const queryClient = new QueryClient()
+
 // Use custom RPC if provided in .env, otherwise use default
 const baseRpc = import.meta.env.VITE_BASE_RPC_URL
-const polygonRpc = import.meta.env.VITE_POLYGON_RPC_URL  
+const polygonRpc = import.meta.env.VITE_POLYGON_RPC_URL
 const arbitrumRpc = import.meta.env.VITE_ARBITRUM_RPC_URL
 const bscRpc = import.meta.env.VITE_BSC_RPC_URL
 const avalancheRpc = import.meta.env.VITE_AVALANCHE_RPC_URL
@@ -38,10 +40,11 @@ const config = createConfig({
   },
 })
 
+
 const onChainKitConfig: AppConfig = {
-  wallet: {
-    display: "modal",
-  }
+    wallet: {
+        display: "modal",
+    }
 }
 
 // Optional: Limit available tokens to specific ones
@@ -68,7 +71,12 @@ createRoot(document.getElementById('root')!).render(
             <TokenProvider>
               <BalanceProvider>
                 <FreebetsProvider>
-                  <LeaderboardProvider>
+                  <LeaderboardProvider onPlayNow={(event: PlayNowEvent) => {
+                                        console.log('Leaderboard requires:', event.games)
+                                        console.log('On chain:', event.chainId)
+                                        console.log('With tokens:', event.tokens)
+                                        // TODO: Implement game switching based on your app architecture
+                                    }}>
                     <App />
                   </LeaderboardProvider>
                 </FreebetsProvider>
